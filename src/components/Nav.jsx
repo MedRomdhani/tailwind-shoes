@@ -6,30 +6,37 @@ import { useState } from "react";
 const ROUTES = ["Home", "About", "Services", "Pricing", "Contact"];
 
 export function Nav() {
-
-  const [isMobileMenu, setIsMobileMenu] = useState(false);
+  const [isMobileMenuShow, setIsMobileMenuShow] = useState(false);
   return (
-    <nav className="flex flex-wrap justify-between items-center">
-      {/* Logo nike */}
+    <nav className="z-10 relative flex flex-wrap items-center justify-between">
+      {/* Logo */}
       <a href="#">
         <NikeLogo className="h-20 w-20" />
       </a>
-      {/* Burger button */}
-      <button onClick={() => setIsMobileMenu(!isMobileMenu)} className="p-2 rounded-lg focus:ring-2 focus:ring-gray-200 lg:hidden">
+      {/*  Burger button */}
+      <button
+        onClick={() => setIsMobileMenuShow(!isMobileMenuShow)}
+        className="lg:hidden p-2 rounded-lg focus:ring-2 focus:ring-gray-200"
+      >
         <RxHamburgerMenu size={25} />
       </button>
+
       {/* Menu list */}
-      <div className={`${!isMobileMenu && "hidden"} w-full lg:w-auto lg:d-block`}>
-        <ul className="lg:space-x-8 flex flex-col lg:flex-row p-4 border rounded-lg border-gray-100 bg-gray-50 text-lg lg:bg-transparent lg:border-none">
+      <div
+        className={`${
+          isMobileMenuShow === false && "hidden"
+        } w-full lg:w-auto lg:block`}
+      >
+        <ul className="lg:space-x-8 flex flex-col  lg:flex-row rounded-lg border border-gray-100 p-4 bg-gray-50 text-lg lg:bg-transparent lg:border-none">
           {ROUTES.map((route, i) => {
             return (
               <li
-                className={`cursor-pointer px-3 py-2  
-          ${
-            i === 0
-              ? "bg-blue-500 text-white rounded lg:bg-transparent lg:text-blue-500"
-              : "hover:bg-gray-200 rounded lg:bg-transparent"
-          }`}
+                className={` lg:hover:text-blue-500 lg:hover:bg-transparent  cursor-pointer px-3 py-2 rounded 
+                ${
+                  i === 0
+                    ? "bg-blue-500 text-white lg:bg-transparent lg:text-blue-500"
+                    : "hover:bg-gray-100"
+                } ${(i === 3 || i === 4) && "lg:text-white"}`}
                 key={route}
               >
                 {route}
@@ -38,12 +45,13 @@ export function Nav() {
           })}
         </ul>
       </div>
+
       {/* Cart button */}
-      <div className="fixed bottom-4 left-4 lg:static">
-        <div className="flex-center w-12 h-12 bg-white shadow-md rounded-full">
+      <div className="fixed bottom-4 left-4 lg:static lg:mr-8 ">
+        <div className=" flex-center cursor-pointer rounded-full bg-white shadow-md h-12 w-12 ">
           <TbShoppingBag />
         </div>
       </div>
     </nav>
   );
-        }
+}
